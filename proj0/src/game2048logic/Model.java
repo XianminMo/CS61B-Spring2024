@@ -85,6 +85,14 @@ public class Model {
      * */
     public boolean emptySpaceExists() {
         // TODO: Task 2. Fill in this function.
+        for (int i = 0; i < size(); i++) {
+            for (int j = 0; j < size(); j++) {
+                Tile t = tile(i, j);
+                if (t == null) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -95,6 +103,14 @@ public class Model {
      */
     public boolean maxTileExists() {
         // TODO: Task 3. Fill in this function.
+        for (int i = 0; i < size(); i++) {
+            for (int j = 0; j < size(); j++) {
+                Tile t = tile(i, j);
+                if (t != null && t.value() == MAX_PIECE) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -106,6 +122,30 @@ public class Model {
      */
     public boolean atLeastOneMoveExists() {
         // TODO: Fill in this function.
+        if (emptySpaceExists()) {
+            return true;
+        }
+        /* 在排除了有empty-space的情况后，实际上只需要判断相邻的tile的value是否相等 */
+        for (int i = 0; i < size(); i++) {
+            for (int j = 0; j < size() - 1; j++) {
+                /* 判断每一行能否移动 */
+                Tile tx = tile(i, j);
+                Tile tx1 = tile(i, j + 1);
+                if (tx.value() == tx1.value()) {
+                    return true;
+                }
+            }
+        }
+        for (int j = 0; j < size(); j++) {
+            for (int i = 0; i < size() - 1; i++) {
+                /* 判断每一列能否移动 */
+                Tile ty = tile(i, j);
+                Tile ty1 = tile(i + 1, j);
+                if (ty.value() == ty1.value()) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
