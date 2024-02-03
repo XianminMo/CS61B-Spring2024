@@ -128,7 +128,7 @@ public class Model {
         /* 在排除了有empty-space的情况后，实际上只需要判断相邻的tile的value是否相等 */
         for (int i = 0; i < size(); i++) {
             for (int j = 0; j < size() - 1; j++) {
-                /* 判断每一行能否移动 */
+                /* 判断每一列能否移动 */
                 Tile tx = tile(i, j);
                 Tile tx1 = tile(i, j + 1);
                 if (tx.value() == tx1.value()) {
@@ -138,7 +138,7 @@ public class Model {
         }
         for (int j = 0; j < size(); j++) {
             for (int i = 0; i < size() - 1; i++) {
-                /* 判断每一列能否移动 */
+                /* 判断每一行能否移动 */
                 Tile ty = tile(i, j);
                 Tile ty1 = tile(i + 1, j);
                 if (ty.value() == ty1.value()) {
@@ -166,9 +166,19 @@ public class Model {
     public void moveTileUpAsFarAsPossible(int x, int y) {
         Tile currTile = board.tile(x, y);
         int myValue = currTile.value();
-        int targetY = y;
+        // int targetY = y;
+        Tile upTile = tile(x, size() - 1);
+        boolean flag = true;
 
         // TODO: Tasks 5, 6, and 10. Fill in this function.
+
+        if ((upTile == null) || (upTile.value() == currTile.value() && !currTile.wasMerged())) {
+            board.move(x, size() - 1, currTile);
+        } else {
+            board.move(x, size() - 2, currTile);
+        }
+
+
     }
 
     /** Handles the movements of the tilt in column x of the board
@@ -178,6 +188,12 @@ public class Model {
      * */
     public void tiltColumn(int x) {
         // TODO: Task 7. Fill in this function.
+        for (int r = size() - 2; r >= 0; r--) {
+            Tile t = tile(x, r);
+            if (t != null) {
+                moveTileUpAsFarAsPossible(x, r);
+            }
+        }
     }
 
     public void tilt(Side side) {
