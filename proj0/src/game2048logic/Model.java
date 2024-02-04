@@ -167,16 +167,24 @@ public class Model {
         Tile currTile = board.tile(x, y);
         int myValue = currTile.value();
         // int targetY = y;
-        Tile upTile = tile(x, size() - 1);
-        boolean flag = true;
 
         // TODO: Tasks 5, 6, and 10. Fill in this function.
+        // 判断能移动到的最上端
+        for (int r = size() - 1; r > y; r--) {
+            Tile upTile = tile(x, r);
+            if (upTile == null) {
+                board.move(x, r, currTile);
+                break;
 
-        if ((upTile == null) || (upTile.value() == currTile.value() && !currTile.wasMerged())) {
-            board.move(x, size() - 1, currTile);
-        } else {
-            board.move(x, size() - 2, currTile);
+            } else if (upTile.value() == currTile.value() && !currTile.wasMerged() && !upTile.wasMerged()) {
+                board.move(x, r, currTile);
+                score += 2 * currTile.value();
+                break;
+            } else {
+                continue;
+            }
         }
+
 
 
     }
@@ -198,6 +206,11 @@ public class Model {
 
     public void tilt(Side side) {
         // TODO: Tasks 8 and 9. Fill in this function.
+        board.setViewingPerspective(side);
+        for (int c = 0; c < size(); c++) {
+            tiltColumn(c);
+        }
+        board.setViewingPerspective(Side.NORTH);
     }
 
     /** Tilts every column of the board toward SIDE.
