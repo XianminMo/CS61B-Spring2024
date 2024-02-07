@@ -54,31 +54,70 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return size() == 0;
     }
 
     @Override
     public int size() {
-        return 0;
+        return this.size;
     }
 
     @Override
     public T removeFirst() {
-        return null;
+        if (isEmpty()) {
+            return null;
+        }
+        T returnItem = sentinel.next.item;
+        sentinel.next.next.prev = sentinel;
+        sentinel.next = sentinel.next.next;
+        size -= 1;
+        return returnItem;
     }
 
     @Override
     public T removeLast() {
-        return null;
+        if (isEmpty()) {
+            return null;
+        }
+        T returnItem = sentinel.prev.item;
+        sentinel.prev.prev.next = sentinel;
+        sentinel.prev = sentinel.prev.prev;
+        size -= 1;
+        return returnItem;
     }
 
     @Override
     public T get(int index) {
-        return null;
+        if (index < 0 || index >= this.size) {
+            return null;
+        }
+        T returnItem = null;
+        int cnt = 0;
+        DoubleNode p = sentinel.next;
+        while (p != sentinel) {
+            if (cnt == index) {
+                returnItem = p.item;
+            }
+            p = p.next;
+            cnt += 1;
+        }
+        return returnItem;
     }
 
     @Override
+    // LinkedListDeque is not recursive, so we need a helper method
     public T getRecursive(int index) {
-        return null;
+        return getRecursive(sentinel.next, index);
+    }
+
+    // Helper method for getRecursive(int index)
+    public  T getRecursive(DoubleNode p, int index) {
+        if (index < 0 || index >= this.size) {
+            return null;
+        }
+        if (index == 0) {
+            return p.item;
+        }
+        return getRecursive(p.next, index - 1);
     }
 }

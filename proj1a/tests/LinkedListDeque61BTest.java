@@ -57,4 +57,76 @@ public class LinkedListDeque61BTest {
      }
 
     // Below, you'll write your own tests for LinkedListDeque61B.
+
+    @Test
+    public void testIsEmpty() {
+         Deque61B<String> lld1 = new LinkedListDeque61B<>();
+         assertThat(lld1.isEmpty()).isTrue();
+         lld1.addLast("Back");
+         assertThat(lld1.isEmpty()).isFalse();
+    }
+
+    @Test
+    public void testSizeZero() {
+         Deque61B<String> lld1 = new LinkedListDeque61B<>();
+         int expectedSize = 0;
+         int actualSize = lld1.size();
+         assertThat(actualSize).isEqualTo(expectedSize);
+    }
+
+    @Test
+    public void testSizeThree() {
+        Deque61B<String> lld1 = new LinkedListDeque61B<>();
+        lld1.addLast("Front");
+        lld1.addLast("Middle");
+        lld1.addLast("Back");
+        int expectedSize = 3;
+        int actualSize = lld1.size();
+        assertThat(actualSize).isEqualTo(expectedSize);
+    }
+
+    @Test
+    public void testGet() {
+        Deque61B<String> lld1 = new LinkedListDeque61B<>();
+        lld1.addLast("Front");
+        lld1.addLast("Middle");
+        lld1.addLast("Back");
+        assertThat(lld1.get(0)).isEqualTo("Front");
+        assertThat(lld1.get(4)).isEqualTo(null);
+        assertThat(lld1.get(-1)).isEqualTo(null);
+    }
+
+    @Test
+    public void testGetRecursive() {
+        Deque61B<String> lld1 = new LinkedListDeque61B<>();
+        lld1.addLast("Front");
+        lld1.addLast("Middle");
+        lld1.addLast("Back");
+        assertThat(lld1.getRecursive(0)).isEqualTo("Front");
+        assertThat(lld1.getRecursive(4)).isEqualTo(null);
+        assertThat(lld1.getRecursive(-1)).isEqualTo(null);
+    }
+
+    @Test
+    /** This test performs interspersed addFirst and addLast calls. */
+    public void removeFirstAndRemoveLastTest() {
+        Deque61B<Integer> lld1 = new LinkedListDeque61B<>();
+
+        lld1.addLast(0);   // [0]
+        lld1.addLast(1);   // [0, 1]
+        lld1.addFirst(-1); // [-1, 0, 1]
+        lld1.addLast(2);   // [-1, 0, 1, 2]
+        lld1.addFirst(-2); // [-2, -1, 0, 1, 2]
+
+        int first = lld1.removeFirst(); // [-1, 0, 1, 2]
+        assertThat(lld1.toList()).containsExactly(-1, 0, 1, 2).inOrder();
+        assertThat(first).isEqualTo(-2);
+
+        int last = lld1.removeLast(); // [-1, 0, 1]
+        assertThat(lld1.toList()).containsExactly(-1, 0, 1).inOrder();
+        assertThat(last).isEqualTo(2);
+
+        assertThat(lld1.size()).isEqualTo(3);
+    }
+
 }
