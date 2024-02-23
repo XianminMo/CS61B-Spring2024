@@ -18,4 +18,5 @@ public class ArrayDeque61BPreconditionTest {
 
         assertWithMessage("Found fields that are not array or primitives").that(badFields).isEmpty();
     }
+
 }
