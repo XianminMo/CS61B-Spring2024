@@ -21,13 +21,18 @@ public class ArrayDeque61BTest {
      }
 
      @Test
-     void testAddFirstAndAddLast() {
+     void testAddFirstAndAddLastAndResize() {
          Deque61B<Integer> List = new ArrayDeque61B<>();
          List.addFirst(1); // [1]
          List.addFirst(5); // [5, 1]
          List.addLast(3); // [5, 1, 3]
          List.addLast(9); // [5, 1, 3, 9]
-         assertThat(List.toList()).containsExactly(5, 1, 3, 9).inOrder();
+         List.addLast(9); // [5, 1, 3, 9, 9]
+         List.addLast(9); // [5, 1, 3, 9, 9, 9]
+         List.addLast(9); // [5, 1, 3, 9, 9, 9, 9]
+         List.addLast(9); // [5, 1, 3, 9, 9, 9, 9, 9]
+         List.addLast(10); // [5, 1, 3, 9, 9, 9, 9, 9, 9]
+         assertThat(List.toList()).containsExactly(5, 1, 3, 9, 9, 9, 9, 9, 10).inOrder();
      }
 
      @Test
@@ -43,4 +48,32 @@ public class ArrayDeque61BTest {
          assertThat(List.get(-1)).isEqualTo(null);
      }
 
+     @Test
+    void testIsEmptyAndSize() {
+         Deque61B<Integer> List = new ArrayDeque61B<>();
+         assertThat(List.isEmpty()).isTrue();
+         assertThat(List.size()).isEqualTo(0);
+         List.addFirst(1); // [1]
+         assertThat(List.isEmpty()).isFalse();
+         List.addFirst(5); // [5, 1]
+         List.addLast(3); // [5, 1, 3]
+         assertThat(List.size()).isEqualTo(3);
+         List.addLast(9); // [5, 1, 3, 9]
+     }
+
+
+     @Test
+    void testRemoveFirstAndRemoveLast() {
+         Deque61B<Integer> List = new ArrayDeque61B<>();
+         List.addFirst(1); // [1]
+         List.addFirst(5); // [5, 1]
+         List.addLast(3); // [5, 1, 3]
+         List.addLast(9); // [5, 1, 3, 9]
+         int returnFirst = List.removeFirst();
+         assertThat(returnFirst).isEqualTo(5);
+         assertThat(List.toList()).containsExactly(1, 3, 9);
+         int returnLast = List.removeLast();
+         assertThat(returnLast).isEqualTo(9);
+         assertThat(List.toList()).containsExactly(1, 3);
+     }
 }
