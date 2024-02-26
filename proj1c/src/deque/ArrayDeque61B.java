@@ -220,6 +220,26 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
         return false;
     }
 
+    @Override
+    public String toString() {
+        Iterator<T> it = iterator();
+        if (! it.hasNext()) {
+            return "[]";
+        }
+
+        StringBuilder sb = new StringBuilder();
+        sb.append('[');
+        for (;;) {
+            T item = it.next();
+            sb.append(item);
+            if (! it.hasNext()) {
+                return sb.append(']').toString();
+            }
+            sb.append(',');
+            sb.append(' ');
+        }
+    }
+
     public static void main(String[] args) {
         Deque61B<Integer> L1 = new ArrayDeque61B<>();
         Deque61B<Integer> L2 = new ArrayDeque61B<>();
@@ -232,5 +252,11 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
         if (L1.equals(L2)) {
             System.out.println("L1 == L2");
         }
+        System.out.println(L1.toString());
+        Deque61B<String> L3 = new ArrayDeque61B<>();
+        L3.addLast("back");
+        L3.addFirst("middle");
+        L3.addFirst("front");
+        System.out.println(L3.toString());
     }
 }

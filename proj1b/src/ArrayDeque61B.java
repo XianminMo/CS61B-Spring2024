@@ -48,6 +48,9 @@ public class ArrayDeque61B<T> implements Deque61B<T>{
         items[nextFirst] = x;
         size += 1;
         First = nextFirst;
+        if (size == 1) {
+            Last = First;
+        }
         if (nextFirst == 0) {
             nextFirst = items.length - 1;
         }
@@ -67,6 +70,9 @@ public class ArrayDeque61B<T> implements Deque61B<T>{
         items[nextLast] = x;
         size += 1;
         Last = nextLast;
+        if (size == 1) {
+            First = Last;
+        }
         if (nextLast == items.length - 1) {
             nextLast = 0;
         }
