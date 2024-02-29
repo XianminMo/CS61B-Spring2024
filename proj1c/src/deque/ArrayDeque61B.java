@@ -20,8 +20,8 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
         size = 0;
         First = 0;
         Last = 0;
-        nextFirst = 6;
-        nextLast = 7;
+        nextFirst = 0;
+        nextLast = 1;
     }
 
     private int adjustIndex(int index) {
