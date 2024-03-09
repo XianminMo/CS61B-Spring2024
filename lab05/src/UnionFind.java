@@ -1,37 +1,45 @@
+import java.util.Arrays
+
 public class UnionFind {
-    // TODO: Instance variables
+    private int[] ufSet;
+
 
     /* Creates a UnionFind data structure holding N items. Initially, all
        items are in disjoint sets. */
     public UnionFind(int N) {
-        // TODO: YOUR CODE HERE
+        ufSet = new int[N];
+        Arrays.fill(ufSet, -1);
     }
 
     /* Returns the size of the set V belongs to. */
     public int sizeOf(int v) {
-        // TODO: YOUR CODE HERE
-        return -1;
+        int root = find(v);
+        return - ufSet[root];
     }
 
     /* Returns the parent of V. If V is the root of a tree, returns the
        negative size of the tree for which V is the root. */
     public int parent(int v) {
-        // TODO: YOUR CODE HERE
-        return -1;
+        return ufSet[v];
     }
 
     /* Returns true if nodes/vertices V1 and V2 are connected. */
     public boolean connected(int v1, int v2) {
-        // TODO: YOUR CODE HERE
-        return false;
+        return find(v1) == find(v2);
     }
 
     /* Returns the root of the set V belongs to. Path-compression is employed
        allowing for fast search-time. If invalid items are passed into this
        function, throw an IllegalArgumentException. */
     public int find(int v) {
-        // TODO: YOUR CODE HERE
-        return -1;
+        if (v < 0) {
+            throw new IllegalArgumentException("IllegalArgument!");
+        }
+        if (parent(v) < 0) {
+            return v;
+        }else {
+            return find(parent(v));
+        }
     }
 
     /* Connects two items V1 and V2 together by connecting their respective
