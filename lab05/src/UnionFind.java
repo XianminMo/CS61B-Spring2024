@@ -1,4 +1,4 @@
-import java.util.Arrays
+import java.util.Arrays;
 
 public class UnionFind {
     private int[] ufSet;
@@ -32,14 +32,15 @@ public class UnionFind {
        allowing for fast search-time. If invalid items are passed into this
        function, throw an IllegalArgumentException. */
     public int find(int v) {
-        if (v < 0) {
+        if (v < 0 || v >= ufSet.length) {
             throw new IllegalArgumentException("IllegalArgument!");
         }
         if (parent(v) < 0) {
             return v;
         }else {
-            return find(parent(v));
+            ufSet[v] = find(parent(v));
         }
+        return parent(v);
     }
 
     /* Connects two items V1 and V2 together by connecting their respective
@@ -48,7 +49,21 @@ public class UnionFind {
        root to V2's root. Union-ing an item with itself or items that are
        already connected should not change the structure. */
     public void union(int v1, int v2) {
-        // TODO: YOUR CODE HERE
+        if (connected(v1, v2)) {
+            return;
+        }
+        int size1 = sizeOf(v1);
+        int size2 = sizeOf(v2);
+        int root1 = find(v1);
+        int root2 = find(v2);
+
+        if (size1 <= size2) {
+            ufSet[root1] = root2;
+            ufSet[root2] = - (size1 + size2);
+        }else {
+            ufSet[root2] = root1;
+            ufSet[root1] = - (size1 + size2);
+        }
     }
 
 }
