@@ -1,0 +1,65 @@
+Enter # strings to insert into the maps: 10
+class ULLMap: 0.00 sec
+class BSTMap: 0.00 sec
+Java's Built-in TreeMap: 0.00 sec
+Java's Built-in HashMap: 0.00 sec
+
+Enter # strings to insert into the maps: 100
+class ULLMap: 0.00 sec
+class BSTMap: 0.00 sec
+Java's Built-in TreeMap: 0.00 sec
+Java's Built-in HashMap: 0.00 sec
+
+Enter # strings to insert into the maps: 1000
+class ULLMap: 0.00 sec
+class BSTMap: 0.00 sec
+Java's Built-in TreeMap: 0.00 sec
+Java's Built-in HashMap: 0.00 sec
+
+Enter # strings to insert into the maps: 10000
+class ULLMap: 0.24 sec
+class BSTMap: 0.00 sec
+Java's Built-in TreeMap: 0.01 sec
+Java's Built-in HashMap: 0.00 sec
+
+Enter # strings to insert into the maps: 100000
+--Stack Overflow -- couldn't add 100000 strings of length 3.
+class BSTMap: 0.04 sec
+Java's Built-in TreeMap: 0.03 sec
+Java's Built-in HashMap: 0.01 sec
+
+Enter # strings to insert into the maps: 200000
+--Stack Overflow -- couldn't add 200000 strings of length 3.
+class BSTMap: 0.07 sec
+Java's Built-in TreeMap: 0.05 sec
+Java's Built-in HashMap: 0.02 sec
+
+Enter # strings to insert into the maps: 500000
+--Stack Overflow -- couldn't add 500000 strings of length 3.
+class BSTMap: 0.15 sec
+Java's Built-in TreeMap: 0.11 sec
+Java's Built-in HashMap: 0.04 sec
+
+Enter # strings to insert into the maps: 1000000
+--Stack Overflow -- couldn't add 1000000 strings of length 3.
+class BSTMap: 0.27 sec
+Java's Built-in TreeMap: 0.22 sec
+Java's Built-in HashMap: 0.07 sec
+
+Enter # strings to insert into the maps: 5000000
+--Stack Overflow -- couldn't add 5000000 strings of length 3.
+class BSTMap: 1.27 sec
+Java's Built-in TreeMap: 0.96 sec
+Java's Built-in HashMap: 0.33 sec
+
+Enter # strings to insert into the maps: 10000000
+--Stack Overflow -- couldn't add 10000000 strings of length 3.
+class BSTMap: 2.56 sec
+Java's Built-in TreeMap: 1.86 sec
+Java's Built-in HashMap: 0.66 sec
+
+Enter # strings to insert into the maps: 20000000
+--Stack Overflow -- couldn't add 20000000 strings of length 3.
+class BSTMap: 5.02 sec
+Java's Built-in TreeMap: 3.75 sec
+Java's Built-in HashMap: 1.29 sec
