@@ -1,7 +1,9 @@
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Set;
+import java.util.TreeSet;
 
-public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>{
+public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>, Iterable<K>{
 
     private class Node {
         private K key;
@@ -17,10 +19,12 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>{
 
     private Node root;
     private int size;
+    private Set<K> keySet;
 
     public BSTMap() {
         this.root = null;
         this.size = 0;
+        this.keySet = new TreeSet<>();
     }
     /**
      * Associates the specified value with the specified key in this map.
@@ -39,6 +43,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>{
     private Node put(Node node, K key, V value) {
         if (node == null) {
             size += 1;
+            keySet.add(key);
             return new Node(key, value);
         }
 
@@ -105,6 +110,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>{
     public void clear() {
         root = null;
         size = 0;
+        keySet.clear();
     }
 
     /**
@@ -113,7 +119,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>{
      */
     @Override
     public Set<K> keySet() {
-        throw new UnsupportedOperationException();
+        return keySet;
     }
 
     /**
@@ -126,7 +132,47 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>{
      */
     @Override
     public V remove(K key) {
-        throw new UnsupportedOperationException();
+        Node node = getNode(root, key);
+        if (node == null) {
+            return null;
+        }
+        root = removeNode(root, key);
+        size -= 1;
+        keySet.remove(key);
+        return node.value;
+    }
+
+    // Helper method to remove a node with a given key
+    private Node removeNode(Node node, K key) {
+        if (node == null) {
+            return null;
+        }
+        int cmp = key.compareTo(node.key);
+        if (cmp < 0) {
+            node.left = removeNode(node.left, key);
+        } else if (cmp > 0) {
+            node.right = removeNode(node.right, key);
+        } else {
+            if (node.left == null) {
+                return node.right;
+            } else if (node.right == null) {
+                return node.left;
+            } else {
+                Node minNode = findMin(node.right);
+                node.key = minNode.key;
+                node.value = minNode.value;
+                node.right = removeNode(node.right, key);
+            }
+        }
+        return node;
+    }
+
+    // Helper method to find the minimum node in the right subtree
+    private Node findMin(Node node) {
+        while (node.left != null) {
+            node= node.left;
+        }
+        return node;
     }
 
     /**
@@ -136,6 +182,6 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>{
      */
     @Override
     public Iterator<K> iterator() {
-        throw new UnsupportedOperationException();
+        return keySet.iterator();
     }
 }

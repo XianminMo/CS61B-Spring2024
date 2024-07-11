@@ -101,6 +101,10 @@ public class TestBSTMap {
         b.put("c", "swiss");
         b.put("b", "pepper jack");
         b.put("e", "gouda");
+//        b.remove("c");
+//        for (String s : b) {
+//            System.out.println(s);
+//        }
 
         assertThat(b.size()).isEqualTo(5);
         assertThat(b.get("d")).isEqualTo("parmesan");
