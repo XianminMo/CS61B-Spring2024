@@ -1,5 +1,8 @@
 package ngrams;
 
+import org.checkerframework.checker.units.qual.A;
+import org.checkerframework.checker.units.qual.Time;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
@@ -48,8 +51,11 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      * Must be in the same order as years().
      */
     public List<Double> data() {
-        // TODO: Fill in this method.
-        return null;
+        List<Double> returnList = new ArrayList<>();
+        for (Integer key : this.keySet()) {
+            returnList.add(this.get(key));
+        }
+        return returnList;
     }
 
     /**
@@ -62,8 +68,21 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      * should store the value from the TimeSeries that contains that year.
      */
     public TimeSeries plus(TimeSeries ts) {
-        // TODO: Fill in this method.
-        return null;
+        TimeSeries returnTs = new TimeSeries();
+        for (Integer key : this.keySet()) {
+            if (ts.containsKey(key)) {
+                returnTs.put(key, this.get(key) + ts.get(key));
+            }
+            else {
+                returnTs.put(key, this.get(key));
+            }
+        }
+        for (Integer key : ts.keySet()) {
+            if (!this.containsKey(key)) {
+                returnTs.put(key, ts.get(key));
+            }
+        }
+        return returnTs;
     }
 
     /**
@@ -76,10 +95,17 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      * If TS has a year that is not in this TimeSeries, ignore it.
      */
     public TimeSeries dividedBy(TimeSeries ts) {
-        // TODO: Fill in this method.
-        return null;
+        TimeSeries returnTs = new TimeSeries();
+        for (Integer key : this.keySet()) {
+            if (!ts.containsKey(key)) {
+                throw new IllegalArgumentException("Key " + key + " is not present in the provided TimeSeries");
+            }
+            Double divisor = ts.get(key);
+            if (divisor == 0) {
+                throw new IllegalArgumentException("Division by zero for year " + key);
+            }
+            returnTs.put(key, this.get(key) / divisor);
+        }
+        return returnTs;
     }
-
-    // TODO: Add any private helper methods.
-    // TODO: Remove all TODO comments before submitting.
 }
