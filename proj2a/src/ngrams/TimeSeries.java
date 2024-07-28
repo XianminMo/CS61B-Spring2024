@@ -1,7 +1,9 @@
 package ngrams;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.Map;
 
 /**
  * An object for mapping a year number (e.g. 1996) to numerical data. Provides
@@ -30,15 +32,15 @@ public class TimeSeries extends TreeMap<Integer, Double> {
      */
     public TimeSeries(TimeSeries ts, int startYear, int endYear) {
         super();
-        // TODO: Fill in this constructor.
+        Map<Integer, Double> subMap = ts.subMap(startYear, endYear + 1); // endYear isn't inclusive, so plus 1
+        this.putAll(subMap);
     }
 
     /**
      * Returns all years for this TimeSeries (in any order).
      */
     public List<Integer> years() {
-        // TODO: Fill in this method.
-        return null;
+        return new ArrayList<>(this.keySet());
     }
 
     /**

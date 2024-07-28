@@ -1,5 +1,6 @@
 import ngrams.TimeSeries;
 
+import org.dom4j.tree.BaseElement;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -54,5 +55,22 @@ public class TimeSeriesTest {
 
         assertThat(totalPopulation.years()).isEmpty();
         assertThat(totalPopulation.data()).isEmpty();
+    }
+
+    @Test
+    public void testConstructorAndYear() {
+        TimeSeries catPopulation = new TimeSeries();
+        catPopulation.put(1991, 0.0);
+        catPopulation.put(1992, 100.0);
+        catPopulation.put(1994, 200.0);
+        catPopulation.put(1995, 300.0);
+        catPopulation.put(1996, 400.0);
+
+        TimeSeries dogPopulation = new TimeSeries(catPopulation, 1992, 1995);
+
+        List<Integer> expectedYears = new ArrayList<>
+                (Arrays.asList(1992, 1994, 1995));
+
+        assertThat(dogPopulation.years()).isEqualTo(expectedYears);
     }
 } 
