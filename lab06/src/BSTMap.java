@@ -19,7 +19,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V>, Iterabl
 
     private Node root;
     private int size;
-    private Set<K> keySet;
+    private final Set<K> keySet;
 
     public BSTMap() {
         this.root = null;

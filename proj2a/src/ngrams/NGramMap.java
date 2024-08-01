@@ -1,6 +1,10 @@
 package ngrams;
+import edu.princeton.cs.algs4.In;
 
+import java.sql.Time;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 import static ngrams.TimeSeries.MAX_YEAR;
 import static ngrams.TimeSeries.MIN_YEAR;
@@ -15,15 +19,64 @@ import static ngrams.TimeSeries.MIN_YEAR;
  *
  * @author Josh Hug
  */
+
 public class NGramMap {
 
-    // TODO: Add any necessary static/instance variables.
+    private static class WordFrequency {
+        private final Map<String, TimeSeries> wordToYearCount;
+
+        private WordFrequency() {
+            this.wordToYearCount = new HashMap<>();
+        }
+
+        private void addWordCount(String word, int year, double count) {
+            wordToYearCount.computeIfAbsent(word, k -> new TimeSeries()).put(year, count); // if the word does not exist, create a new TimeSeries which is empty(Lambda expression), then put the key and the value
+        }
+
+        private TimeSeries getWordCount(String word) {
+            TimeSeries original = wordToYearCount.getOrDefault(word, new TimeSeries()); // if the word has already existed, return its value, or return a new TimeSeries which is empty
+            if (original.isEmpty()) {
+                return new TimeSeries();
+            }else {
+                int startYear = original.firstKey();
+                int endYear = original.lastKey();
+                return new TimeSeries(original, startYear, endYear);  // defensive copy
+            }
+        }
+
+
+    }
+
+    private WordFrequency wordFrequency;
+    private TimeSeries totalCounts;
 
     /**
      * Constructs an NGramMap from WORDSFILENAME and COUNTSFILENAME.
      */
     public NGramMap(String wordsFilename, String countsFilename) {
-        // TODO: Fill in this constructor. See the "NGramMap Tips" section of the spec for help.
+        this.wordFrequency = new WordFrequency();
+        this.totalCounts = new TimeSeries();
+
+
+    }
+
+    private WordFrequency loadWordsFile(String wordsFilename, WordFrequency wordFrequency) {
+          return null;
+    }
+
+    private TimeSeries loadCountsFile(String countsFilename, TimeSeries totalCounts) {
+        In in = new In(countsFilename);
+        int i = 0;
+
+        while (!in.isEmpty()) {
+            i += 1;
+            String nextLine = in.readLine();
+            String[] splitLine = nextLine.split(",");
+            int year = Integer.parseInt(splitLine[0]);
+            double count = Double.parseDouble(splitLine[1]);
+            totalCounts.put(year, count);
+        }
+        return totalCounts;
     }
 
     /**
@@ -53,7 +106,7 @@ public class NGramMap {
      * Returns a defensive copy of the total number of words recorded per year in all volumes.
      */
     public TimeSeries totalCountHistory() {
-        // TODO: Fill in this method.
+        // TODO: Fill in this m ethod.
         return null;
     }
 

@@ -1,8 +1,10 @@
+import edu.princeton.cs.algs4.In;
 import ngrams.NGramMap;
 import ngrams.TimeSeries;
 
 import org.junit.jupiter.api.Test;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -71,6 +73,24 @@ public class NGramMapTest {
 
         double expectedFishPlusDogWeight1865 = (136497.0 + 75819.0) / 2563919231.0;
         assertThat(fishPlusDogWeight.get(1865)).isWithin(1E-10).of(expectedFishPlusDogWeight1865);
+    }
+
+    @Test
+    public void testLoadCountsFile() {
+        TimeSeries totalCounts = new TimeSeries();
+        In in = new In("./data/ngrams/total_counts.csv");
+        int i = 0;
+
+        while (!in.isEmpty()) {
+            i += 1;
+            String nextLine = in.readLine();
+            String[] splitLine = nextLine.split(",");
+            int year = Integer.parseInt(splitLine[0]);
+            double count = Double.parseDouble(splitLine[1]);
+            totalCounts.put(year, count);
+        }
+
+        assertThat(totalCounts.get(1490)).isWithin(1E-10).of(50262);
     }
 
 }  
