@@ -23,7 +23,7 @@ public class Main {
         */
         NGramMap Map = new NGramMap("./data/ngrams/top_49887_words.csv", "./data/ngrams/total_counts.csv");
         hns.startUp();
-        hns.register("history", new DummyHistoryHandler());
+        hns.register("history", new HistoryHandler(Map));
         hns.register("historytext", new HistoryTextHandler(Map));
 
         System.out.println("Finished server startup! Visit http://localhost:4567/ngordnet_2a.html");
