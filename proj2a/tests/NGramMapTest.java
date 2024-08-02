@@ -93,4 +93,9 @@ public class NGramMapTest {
         assertThat(totalCounts.get(1490)).isWithin(1E-10).of(50262);
     }
 
+    @Test
+    public void testLoadWordsFile() {
+
+    }
+
 }  

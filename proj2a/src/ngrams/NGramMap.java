@@ -57,8 +57,8 @@ public class NGramMap {
         this.wordFrequency = new WordFrequency();
         this.totalCounts = new TimeSeries();
 
-        loadWordsFile(wordsFilename, this.wordFrequency);
-        loadCountsFile(countsFilename, this.totalCounts);
+        loadWordsFile(wordsFilename, wordFrequency);
+        loadCountsFile(countsFilename, totalCounts);
 
     }
 
@@ -99,8 +99,8 @@ public class NGramMap {
      * returns an empty TimeSeries.
      */
     public TimeSeries countHistory(String word, int startYear, int endYear) {
-        // TODO: Fill in this method.
-        return null;
+        TimeSeries original = wordFrequency.getWordCount(word);
+        return new TimeSeries(original, startYear, endYear);
     }
 
     /**
@@ -110,16 +110,16 @@ public class NGramMap {
      * is not in the data files, returns an empty TimeSeries.
      */
     public TimeSeries countHistory(String word) {
-        // TODO: Fill in this method.
-        return null;
+        return wordFrequency.getWordCount(word);
     }
 
     /**
      * Returns a defensive copy of the total number of words recorded per year in all volumes.
      */
     public TimeSeries totalCountHistory() {
-        // TODO: Fill in this m ethod.
-        return null;
+        int startYear = totalCounts.firstKey();
+        int endYear = totalCounts.lastKey();
+        return new TimeSeries(totalCounts, startYear, endYear);
     }
 
     /**
@@ -128,8 +128,18 @@ public class NGramMap {
      * TimeSeries.
      */
     public TimeSeries weightHistory(String word, int startYear, int endYear) {
-        // TODO: Fill in this method.
-        return null;
+        TimeSeries weight = new TimeSeries();
+        TimeSeries wordCounts = countHistory(word);
+        if (wordCounts.isEmpty()) {
+            return new TimeSeries();
+        }else {
+            for (int year = startYear; year <= endYear; year++) {
+                if (wordCounts.containsKey(year) && totalCounts.containsKey(year)) {
+                    weight.put(year, wordCounts.get(year) / totalCounts.get(year));
+                }
+            }
+        }
+        return weight;
     }
 
     /**
@@ -138,8 +148,18 @@ public class NGramMap {
      * TimeSeries.
      */
     public TimeSeries weightHistory(String word) {
-        // TODO: Fill in this method.
-        return null;
+        TimeSeries weight = new TimeSeries();
+        TimeSeries wordCounts = countHistory(word);
+        if (wordCounts.isEmpty()) {
+            return new TimeSeries();
+        }else {
+            for (Integer year : wordCounts.keySet()) {
+                if (totalCounts.containsKey(year)) {
+                    weight.put(year, wordCounts.get(year) / totalCounts.get(year));
+                }
+            }
+        }
+        return weight;
     }
 
     /**
@@ -149,8 +169,16 @@ public class NGramMap {
      */
     public TimeSeries summedWeightHistory(Collection<String> words,
                                           int startYear, int endYear) {
-        // TODO: Fill in this method.
-        return null;
+        TimeSeries summedWeights = new TimeSeries();
+
+        for (String word : words) {
+            TimeSeries wordWeights = weightHistory(word, startYear, endYear);
+            for (Integer year : wordWeights.keySet()) {
+                summedWeights.put(year, summedWeights.getOrDefault(year, 0.0) + wordWeights.get(year));
+            }
+        }
+
+        return summedWeights;
     }
 
     /**
@@ -158,10 +186,16 @@ public class NGramMap {
      * exist in this time frame, ignore it rather than throwing an exception.
      */
     public TimeSeries summedWeightHistory(Collection<String> words) {
-        // TODO: Fill in this method.
-        return null;
+        TimeSeries summedWeights = new TimeSeries();
+
+        for (String word : words) {
+            TimeSeries wordWeights = weightHistory(word);
+            for (Integer year : wordWeights.keySet()) {
+                summedWeights.put(year, summedWeights.getOrDefault(year, 0.0) + wordWeights.get(year));
+            }
+        }
+
+        return summedWeights;
     }
 
-    // TODO: Add any private helper methods.
-    // TODO: Remove all TODO comments before submitting.
 }
