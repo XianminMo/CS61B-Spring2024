@@ -57,14 +57,27 @@ public class NGramMap {
         this.wordFrequency = new WordFrequency();
         this.totalCounts = new TimeSeries();
 
+        loadWordsFile(wordsFilename, this.wordFrequency);
+        loadCountsFile(countsFilename, this.totalCounts);
 
     }
 
-    private WordFrequency loadWordsFile(String wordsFilename, WordFrequency wordFrequency) {
-          return null;
+    private void loadWordsFile(String wordsFilename, WordFrequency wordFrequency) {
+        In in = new In(wordsFilename);
+        int i = 0;
+
+        while (!in.isEmpty()) {
+            i += 1;
+            String nextLine = in.readLine();
+            String[] splitLine = nextLine.split("\t");
+            String word = splitLine[0];
+            int year = Integer.parseInt(splitLine[1]);
+            double count = Double.parseDouble(splitLine[2]);
+            wordFrequency.addWordCount(word, year, count);
+        }
     }
 
-    private TimeSeries loadCountsFile(String countsFilename, TimeSeries totalCounts) {
+    private void loadCountsFile(String countsFilename, TimeSeries totalCounts) {
         In in = new In(countsFilename);
         int i = 0;
 
@@ -76,7 +89,6 @@ public class NGramMap {
             double count = Double.parseDouble(splitLine[1]);
             totalCounts.put(year, count);
         }
-        return totalCounts;
     }
 
     /**
