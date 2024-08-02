@@ -9,10 +9,10 @@ import java.util.List;
 
 public class HistoryTextHandler extends NgordnetQueryHandler {
 
-    private final NGramMap Map;
+    private final NGramMap ngm;
 
-    public HistoryTextHandler(NGramMap Map) {
-        this.Map = Map;
+    public HistoryTextHandler(NGramMap ngm) {
+        this.ngm = ngm;
     }
     @Override
     public String handle(NgordnetQuery q) {
@@ -22,7 +22,7 @@ public class HistoryTextHandler extends NgordnetQueryHandler {
         StringBuilder response = new StringBuilder();
 
         for (String word : words) {
-            TimeSeries weightHistory = Map.weightHistory(word, startYear, endYear);
+            TimeSeries weightHistory = ngm.weightHistory(word, startYear, endYear);
             if (weightHistory.isEmpty()) {
                 continue;
             }
