@@ -2,11 +2,7 @@ package hashmap;
 
 import org.checkerframework.checker.units.qual.C;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Set;
-
+import java.util.*;
 
 
 /**
@@ -40,10 +36,11 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     private int capacity;
     private int numOfElements;
     private double loadFactor;
+    private Set<K> keyset;
 
     /** Constructors */
     public MyHashMap() {
-        this(DEFAULT_CAPACITY, DEFAULT_LOAD_FACTOR)
+        this(DEFAULT_CAPACITY, DEFAULT_LOAD_FACTOR);
     }
 
     public MyHashMap(int initialCapacity) {
@@ -57,6 +54,7 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      * @param initialCapacity initial size of backing array
      * @param loadFactor maximum load factor
      */
+    @SuppressWarnings("unchecked") // It is safe
     public MyHashMap(int initialCapacity, double loadFactor) {
         buckets = new Collection[initialCapacity];
         for (int i = 0; i < initialCapacity; i++) {
@@ -65,6 +63,7 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         this.capacity = initialCapacity;
         this.numOfElements = 0;
         this.loadFactor = loadFactor;
+        this.keyset = new HashSet<>();
     }
 
     /**
@@ -74,7 +73,7 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
      *  1. Insert items (`add` method)
      *  2. Remove items (`remove` method)
      *  3. Iterate through items (`iterator` method)
-     *  Note that that this is referring to the hash table bucket itself,
+     *  Note that this is referring to the hash table bucket itself,
      *  not the hash map itself.
      *
      * Each of these methods is supported by java.util.Collection,
@@ -91,26 +90,28 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         return new LinkedList<>();
     }
 
-    // TODO: Implement the methods of the Map61B Interface below
-    // Your code won't compile until you do so!
 
-    private int getIndex(K key, int capacity) {
+    private int getIndex(K key) {
         return Math.floorMod(key.hashCode(), capacity);
     }
 
     /* Insert or update a key-value pair */
     @Override
     public void put(K key, V value) {
-        int index = getIndex(key, capacity);
+        if (key == null || value == null) {
+            throw new IllegalArgumentException("Null keys or values are not allowed");
+        }
+        int index = getIndex(key);
         Collection<Node> bucket = buckets[index];
         for (Node node : bucket) {
             if (node.key.equals(key)) {
                 node.value = value;
+                return;
             }
-            return;
         }
         bucket.add(new Node(key, value));
         numOfElements += 1;
+        keyset.add(key);
 
         // check load factor and resize if necessary
         if (numOfElements > loadFactor * capacity) {
@@ -130,7 +131,7 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
         // Rehash all existing entries
         for (Collection<Node> bucket : buckets) {
             for (Node node : bucket) {
-                int newIndex = getIndex(node.key, newCapacity);
+                int newIndex = Math.floorMod(node.key.hashCode(), newCapacity);
                 newBuckets[newIndex].add(node);
             }
         }
@@ -141,36 +142,65 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
 
     @Override
     public V get(K key) {
+        if (key == null) {
+            throw new IllegalArgumentException("Null keys are not allowed");
+        }
+        int index = getIndex(key);
+        Collection<Node> bucket = buckets[index];
+        for (Node node : bucket) {
+            if (node.key.equals(key)) {
+                return node.value;
+            }
+        }
         return null;
     }
 
     @Override
     public boolean containsKey(K key) {
-        return false;
+        return get(key) != null;
     }
 
     @Override
     public int size() {
-        return 0;
+        return numOfElements;
     }
 
     @Override
     public void clear() {
-        throw new UnsupportedOperationException();
+        for (int i = 0; i < capacity; i++) {
+            buckets[i].clear();
+        }
+
+        numOfElements = 0;
+        keyset.clear();
     }
 
     @Override
     public Set<K> keySet() {
-        throw new UnsupportedOperationException();
+        return keyset;
     }
 
     @Override
     public V remove(K key) {
-        throw new UnsupportedOperationException();
+        int index = getIndex(key);
+        Collection<Node> bucket = buckets[index];
+        Iterator<Node> iterator = bucket.iterator();
+
+        while (iterator.hasNext()) {
+            Node node = iterator.next();
+            if (node.key.equals(key)) {
+                V value = node.value;
+                iterator.remove();
+                numOfElements -= 1;
+                keyset.remove(key);
+                return value;
+            }
+        }
+        return null;
     }
 
     @Override
     public Iterator<K> iterator() {
-        throw new UnsupportedOperationException();
+        return keyset.iterator();
     }
 }
