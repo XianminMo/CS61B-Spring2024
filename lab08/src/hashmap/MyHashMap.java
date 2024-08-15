@@ -98,8 +98,8 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
     /* Insert or update a key-value pair */
     @Override
     public void put(K key, V value) {
-        if (key == null || value == null) {
-            throw new IllegalArgumentException("Null keys or values are not allowed");
+        if (key == null) {
+            throw new IllegalArgumentException("Null keys are not allowed");
         }
         int index = getIndex(key);
         Collection<Node> bucket = buckets[index];
@@ -157,7 +157,14 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
 
     @Override
     public boolean containsKey(K key) {
-        return get(key) != null;
+        int index = getIndex(key);
+        Collection<Node> bucket = buckets[index];
+        for (Node node : bucket) {
+            if (node.key.equals(key)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
@@ -182,6 +189,9 @@ public class MyHashMap<K, V> implements Map61B<K, V> {
 
     @Override
     public V remove(K key) {
+        if (key == null) {
+            throw new IllegalArgumentException("Null keys are not allowed");
+        }
         int index = getIndex(key);
         Collection<Node> bucket = buckets[index];
         Iterator<Node> iterator = bucket.iterator();
