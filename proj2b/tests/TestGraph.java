@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 import static com.google.common.truth.Truth.assertThat;
 
-public class testGraph {
+public class TestGraph {
     @Test
     public void testAddVertex() {
         Graph graph = new Graph();

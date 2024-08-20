@@ -42,8 +42,9 @@ public class WordNet {
             String[] splitLine = nextLine.split(",");
             int index = Integer.parseInt(splitLine[0]);
             List<String> labels = new ArrayList<>();
-            for (int i = 1; i < splitLine.length - 1; i++) {
-                labels.add(splitLine[i]);
+            String[] words = splitLine[1].split(" ");
+            for (String word : words) {
+                labels.add(word);
             }
             labelIndexMap.putIfAbsent(index, labels);
         }
@@ -62,14 +63,15 @@ public class WordNet {
     }
 
     public Set<String> hyponyms(String word) {
-        List<Integer> indexes = labelIndexMap.findIndexForWord(word);
         Set<String> hyponymsSet = new HashSet<>();
+        List<Integer> indexes = labelIndexMap.findIndexForWord(word);
         for (Integer index : indexes) {
-            Iterable<Integer> neighbors = graph.neighbors(index);
-            for (Integer neighbor : neighbors) {
-                List<String> neighborWords = labelIndexMap.get(neighbor);
-                if (neighborWords != null) {
-                    hyponymsSet.addAll(neighborWords);
+            DepthFirstPaths dfs = new DepthFirstPaths(graph, index);
+            Set<Integer> reachableVertexes = dfs.reachableVertexes();
+            for (Integer vertex : reachableVertexes) {
+                List<String> labels = labelIndexMap.get(vertex);
+                if (labels != null) {
+                    hyponymsSet.addAll(labels);
                 }
             }
         }
