@@ -1,6 +1,6 @@
 package main;
 
-import WordNet.WordNet;
+import wordnet.WordNet;
 import browser.NgordnetQuery;
 import browser.NgordnetQueryHandler;
 

@@ -1,6 +1,6 @@
 package main;
 
-import WordNet.WordNet;
+import wordnet.WordNet;
 import browser.NgordnetServer;
 import edu.berkeley.eecs.inst.cs61b.ngrams.StaffNGramMap;
 import ngrams.NGramMap;
