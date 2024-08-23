@@ -36,7 +36,7 @@ public class HyponymsHandler extends NgordnetQueryHandler {
         for (String word : hyponyms0) {
             double count;
             TimeSeries ts = ngm.countHistory(word, startYear, endYear);
-            if (ts == null) {
+            if (ts.isEmpty()) {
                 continue;
             }
             count = ts.values().stream().mapToDouble(Double::doubleValue).sum();
