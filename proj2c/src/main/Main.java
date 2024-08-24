@@ -14,12 +14,12 @@ public class Main {
         NgordnetServer hns = new NgordnetServer();
 
         String wordsFile = "./data/ngrams/top_14377_words.csv";
-        String countsFlie = "./data/ngrams/total_counts.csv";
+        String countsFile = "./data/ngrams/total_counts.csv";
 
         String synsetFile = "./data/wordnet/synsets.txt";
         String hyponymFile = "./data/wordnet/hyponyms.txt";
 
-        NGramMap ngm = new NGramMap(wordsFile, countsFlie);
+        NGramMap ngm = new NGramMap(wordsFile, countsFile);
         WordNet wn = new WordNet(synsetFile, hyponymFile);
 
         hns.startUp();

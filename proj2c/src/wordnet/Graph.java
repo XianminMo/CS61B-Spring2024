@@ -5,13 +5,16 @@ import java.util.*;
 // Directed graph
 public class Graph {
     private Map<Integer, List<Integer>> adjList;
+    private Map<Integer, List<Integer>> reverseAdjList;
 
     public Graph() {
-        adjList = new HashMap<>();
+        this.adjList = new HashMap<>();
+        this.reverseAdjList = new HashMap<>();
     }
 
     public void addVertex(int vertex) {
         adjList.putIfAbsent(vertex, new ArrayList<>());
+        reverseAdjList.putIfAbsent(vertex, new ArrayList<>());
     }
 
     public void addEdge(int fromVertex, int toVertex) {

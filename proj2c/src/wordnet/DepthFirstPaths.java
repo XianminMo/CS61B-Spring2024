@@ -9,10 +9,11 @@ public class DepthFirstPaths {
     private Set<Integer> marked;
 
     public DepthFirstPaths(Graph graph, int vertex) {
-        marked = new HashSet<>();
+        this.marked = new HashSet<>();
         dfs(graph, vertex);
     }
 
+    // recursive depth first search vertex, reachable vertices are stored in marked set
     private void dfs(Graph graph, int vertex) {
         marked.add(vertex);
         for (Integer neighbor : graph.neighbors(vertex)) {
@@ -22,7 +23,7 @@ public class DepthFirstPaths {
         }
     }
 
-    public Set<Integer> reachableVertexes() {
+    public Set<Integer> reachableVertices() {
         return marked;
     }
 }

@@ -13,6 +13,7 @@ public class WordNet {
             super();
         }
 
+        // 扩展了 Map 的一个方法，可以通过索引找到特定的单词（value是一个 words list, 并且一个 word 在不同的 value 中可能会重复出现）
         public List<Integer> findIndexForWord(String word) {
             List<Integer> indexes = new ArrayList<>();
             for (Entry<Integer, List<String>> entry : this.entrySet()) {
@@ -28,8 +29,8 @@ public class WordNet {
     }
 
     public WordNet(String synsetsFilename, String hyponymsFilename) {
-        graph = new Graph();
-        labelIndexMap = new myMap();
+        this.graph = new Graph(); // 提供存放的单词的基础结构
+        this.labelIndexMap = new myMap(); // 存放 mapping from index to words list
 
         loadSynsetsFile(synsetsFilename, labelIndexMap);
         loadHyponymsFile(hyponymsFilename, graph);
@@ -41,11 +42,8 @@ public class WordNet {
             String nextLine = in.readLine();
             String[] splitLine = nextLine.split(",");
             int index = Integer.parseInt(splitLine[0]);
-            List<String> labels = new ArrayList<>();
             String[] words = splitLine[1].split(" ");
-            for (String word : words) {
-                labels.add(word);
-            }
+            List<String> labels = new ArrayList<>(Arrays.asList(words));
             labelIndexMap.putIfAbsent(index, labels);
         }
     }
@@ -67,8 +65,8 @@ public class WordNet {
         List<Integer> indexes = labelIndexMap.findIndexForWord(word);
         for (Integer index : indexes) {
             DepthFirstPaths dfs = new DepthFirstPaths(graph, index);
-            Set<Integer> reachableVertexes = dfs.reachableVertexes();
-            for (Integer vertex : reachableVertexes) {
+            Set<Integer> reachableVertices = dfs.reachableVertices(); // depth first search on every reachable vertexes
+            for (Integer vertex : reachableVertices) {
                 List<String> labels = labelIndexMap.get(vertex);
                 if (labels != null) {
                     hyponymsSet.addAll(labels);

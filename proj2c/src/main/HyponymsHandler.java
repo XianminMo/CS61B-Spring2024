@@ -1,5 +1,6 @@
 package main;
 
+import browser.NgordnetQueryType;
 import ngrams.NGramMap;
 import ngrams.TimeSeries;
 import wordnet.WordNet;
@@ -10,8 +11,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class HyponymsHandler extends NgordnetQueryHandler {
-    private WordNet wn;
-    private NGramMap ngm;
+    private WordNet wn; // 存放单词图（上位词、下位词）
+    private NGramMap ngm; // 存放单词频次信息
     public HyponymsHandler(WordNet wn, NGramMap ngm) {
         this.wn = wn;
         this.ngm = ngm;
@@ -20,19 +21,38 @@ public class HyponymsHandler extends NgordnetQueryHandler {
 
     @Override
     public String handle(NgordnetQuery q) {
+        // 获取参数以及查询类型
         List<String> words = q.words();
-        Map<String, Double> wordToCount = new HashMap<>();
         int k = q.k();
         int startYear = q.startYear();
         int endYear = q.endYear();
-        Set<String> hyponyms0 = wn.hyponyms(words.get(0));
+        NgordnetQueryType queryType = q.ngordnetQueryType();
+
+        if (queryType == NgordnetQueryType.HYPONYMS) {
+            // 处理 hyponyms 类型的查询
+            return handleHyponymsQuery(words, k, startYear, endYear);
+        } else if (queryType == NgordnetQueryType.ANCESTORS) {
+            // 处理 common ancestors 类型的查询
+            return handleAncestorsQuery(words, k, startYear, endYear);
+        } else {
+            // 如果查询类型不匹配，返回一个错误信息
+            return "Unsupported query type.";
+        }
+    }
+
+    private String handleHyponymsQuery(List<String> words, int k, int startYear, int endYear) {
+        Set<String> hyponyms0 = wn.hyponyms(words.get(0)); // 获取第一个单词的下位词
+        Map<String, Double> wordToCount = new HashMap<>(); // 存放时间区间内单词出现的频次
         if (words.size() == 2) {
             Set<String> hyponyms1 = wn.hyponyms(words.get(1));
-            hyponyms0.retainAll(hyponyms1);
+            hyponyms0.retainAll(hyponyms1);  // 获取两个单词下位词集合的交集
         }
+        // 如果 k == 0, 那么直接返回，没有输入参数k的时候k的默认值即为0
         if (k == 0) {
             return convertSetToSortedString(hyponyms0);
         }
+
+        // 下面处理 k != 0 的情况，根据时间区间内出现频次对所有下位词进行排序并返回前k个词
         for (String word : hyponyms0) {
             double count;
             TimeSeries ts = ngm.countHistory(word, startYear, endYear);
@@ -43,6 +63,7 @@ public class HyponymsHandler extends NgordnetQueryHandler {
             wordToCount.put(word, count);
         }
 
+        // 如果对应时间段内没有单词，则直接返回一个 empty set
         if (wordToCount.isEmpty()) {
             return convertSetToSortedString(new HashSet<>());
         }
@@ -70,9 +91,13 @@ public class HyponymsHandler extends NgordnetQueryHandler {
 
 
         return convertSetToSortedString(newHyponyms);
-
     }
 
+    private String handleAncestorsQuery(List<String> words, int k, int startYear, int endYear) {
+        return null;
+    }
+
+    // 将一个set变成一个web界面输出格式的string
     public static String convertSetToSortedString(Set<String> set) {
         List<String> sortedList = new ArrayList<>(set);
         Collections.sort(sortedList);
