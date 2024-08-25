@@ -64,7 +64,7 @@ public class WordNet {
         Set<String> hyponymsSet = new HashSet<>();
         List<Integer> indexes = labelIndexMap.findIndexForWord(word);
         for (Integer index : indexes) {
-            DepthFirstPaths dfs = new DepthFirstPaths(graph, index);
+            DepthFirstPaths dfs = new DepthFirstPaths(graph, index, false);
             Set<Integer> reachableVertices = dfs.reachableVertices(); // depth first search on every reachable vertexes
             for (Integer vertex : reachableVertices) {
                 List<String> labels = labelIndexMap.get(vertex);
@@ -74,6 +74,22 @@ public class WordNet {
             }
         }
         return hyponymsSet;
+    }
+
+    public Set<String> ancestors(String word) {
+        Set<String> ancestorsSet = new HashSet<>();
+        List<Integer> indexes = labelIndexMap.findIndexForWord(word);
+        for (Integer index : indexes) {
+            DepthFirstPaths dfs = new DepthFirstPaths(graph, index, true);
+            Set<Integer> reachableVertices = dfs.reachableVertices(); // reverse depth first search on every reachable vertexes
+            for (Integer vertex : reachableVertices) {
+                List<String> labels = labelIndexMap.get(vertex);
+                if (labels != null) {
+                    ancestorsSet.addAll(labels);
+                }
+            }
+        }
+        return ancestorsSet;
     }
 
 

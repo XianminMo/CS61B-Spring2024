@@ -1,6 +1,7 @@
 package main;
 
 import browser.NgordnetQueryType;
+import edu.princeton.cs.algs4.In;
 import ngrams.NGramMap;
 import ngrams.TimeSeries;
 import wordnet.WordNet;
@@ -94,6 +95,9 @@ public class HyponymsHandler extends NgordnetQueryHandler {
     }
 
     private String handleAncestorsQuery(List<String> words, int k, int startYear, int endYear) {
+        Set<String> ancestors0 = wn.ancestors(words.get(0)); // 获取第一个单词的上位词
+
+
         return null;
     }
 

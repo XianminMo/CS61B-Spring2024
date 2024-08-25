@@ -21,6 +21,9 @@ public class Graph {
         adjList.putIfAbsent(fromVertex, new ArrayList<>());
         adjList.putIfAbsent(toVertex, new ArrayList<>());
         adjList.get(fromVertex).add(toVertex);
+        reverseAdjList.putIfAbsent(fromVertex, new ArrayList<>());
+        reverseAdjList.putIfAbsent(toVertex, new ArrayList<>());
+        reverseAdjList.get(toVertex).add(fromVertex);
     }
 
     public Iterable<Integer> neighbors(int vertex) {
@@ -29,5 +32,10 @@ public class Graph {
         return neighbors;
     }
 
+    public Iterable<Integer> reverseNeighbors(int vertex) {
+        List<Integer> reverseNeighbors = reverseAdjList.getOrDefault(vertex, new ArrayList<>());
+        Collections.sort(reverseNeighbors); // ensure order
+        return reverseNeighbors;
+    }
 }
 
