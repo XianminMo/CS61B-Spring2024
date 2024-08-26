@@ -24,7 +24,7 @@ public class DepthFirstPaths {
         } else {
             neighbors = graph.neighbors(vertex); // 正向搜索
         }
-        for (Integer neighbor : graph.neighbors(vertex)) {
+        for (Integer neighbor : neighbors) {
             if (!marked.contains(neighbor)) {
                 dfs(graph, neighbor); // recursive
             }

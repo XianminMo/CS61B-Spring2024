@@ -1,0 +1,240 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 264241152 bytes. Error detail: G1 virtual space
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   This process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+#   JVM is running with Zero Based Compressed Oops mode in which the Java heap is
+#     placed in the first 32GB address space. The Java Heap base address is the
+#     maximum limit for the native heap growth. Please use -XX:HeapBaseMinAddress
+#     to set the Java Heap base and to place the Java Heap above 32GB virtual address.
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (os_windows.cpp:3631), pid=79908, tid=31680
+#
+# JRE version:  (22.0.2+9) (build )
+# Java VM: OpenJDK 64-Bit Server VM (22.0.2+9-70, mixed mode, sharing, tiered, compressed oops, compressed class ptrs, g1 gc, windows-amd64)
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -javaagent:D:\tool\IntelliJ IDEA Community Edition 2024.1.4\lib\idea_rt.jar=55269:D:\tool\IntelliJ IDEA Community Edition 2024.1.4\bin -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 main.Main
+
+Host: 12th Gen Intel(R) Core(TM) i5-12500, 12 cores, 15G,  Windows 11 , 64 bit Build 22621 (10.0.22621.3958)
+Time: Mon Aug 26 11:34:41 2024  Windows 11 , 64 bit Build 22621 (10.0.22621.3958) elapsed time: 0.069931 seconds (0d 0h 0m 0s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x000001a5dce690e0):  JavaThread "Unknown thread" [_thread_in_vm, id=31680, stack(0x00000090e4800000,0x00000090e4900000) (1024K)]
+
+Stack: [0x00000090e4800000,0x00000090e4900000]
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x6e26e9]  (no source info available)
+V  [jvm.dll+0x875753]  (no source info available)
+V  [jvm.dll+0x877b7e]  (no source info available)
+V  [jvm.dll+0x878253]  (no source info available)
+V  [jvm.dll+0x27fc86]  (no source info available)
+V  [jvm.dll+0x6ded85]  (no source info available)
+V  [jvm.dll+0x6d388a]  (no source info available)
+V  [jvm.dll+0x358b8a]  (no source info available)
+V  [jvm.dll+0x3610b6]  (no source info available)
+V  [jvm.dll+0x3b419e]  (no source info available)
+V  [jvm.dll+0x3b4448]  (no source info available)
+V  [jvm.dll+0x32c5ec]  (no source info available)
+V  [jvm.dll+0x32d258]  (no source info available)
+V  [jvm.dll+0x83d5ac]  (no source info available)
+V  [jvm.dll+0x3c10d1]  (no source info available)
+V  [jvm.dll+0x8264cc]  (no source info available)
+V  [jvm.dll+0x45bd5e]  (no source info available)
+V  [jvm.dll+0x45dbe1]  (no source info available)
+C  [jli.dll+0x52a3]  (no source info available)
+C  [ucrtbase.dll+0x29333]  (no source info available)
+C  [KERNEL32.DLL+0x1257d]  (no source info available)
+C  [ntdll.dll+0x5af28]  (no source info available)
+
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x00007ffa17b5c1c8, length=0, elements={
+}
+
+Java Threads: ( => current thread )
+Total: 0
+
+Other Threads:
+  0x000001a5df1094c0 WorkerThread "GC Thread#0"                     [id=8668, stack(0x00000090e4900000,0x00000090e4a00000) (1024K)]
+  0x000001a5df11b1b0 ConcurrentGCThread "G1 Main Marker"            [id=49140, stack(0x00000090e4a00000,0x00000090e4b00000) (1024K)]
+  0x000001a5df11d470 WorkerThread "G1 Conc#0"                       [id=49028, stack(0x00000090e4b00000,0x00000090e4c00000) (1024K)]
+
+[error occurred during error reporting (printing all threads), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ffa172af517]
+VM state: not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x00007ffa17bdcc80] Heap_lock - owner thread: 0x000001a5dce690e0
+
+Heap address: 0x0000000704c00000, size: 4020 MB, Compressed Oops mode: Zero based, Oop shift amount: 3
+
+CDS archive(s) mapped at: [0x0000000000000000-0x0000000000000000-0x0000000000000000), size 0, SharedBaseAddress: 0x0000000800000000, ArchiveRelocationMode: 1.
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 0, Narrow klass range: 0x0
+
+GC Precious Log:
+ CardTable entry size: 512
+ Card Set container configuration: InlinePtr #cards 4 size 8 Array Of Cards #cards 16 size 48 Howl #buckets 8 coarsen threshold 3686 Howl Bitmap #cards 512 size 80 coarsen threshold 460 Card regions per heap region 1 cards per card region 4096
+
+Heap:
+ garbage-first heap   total reserved 4116480K, committed 0K, used 0K [0x0000000704c00000, 0x0000000800000000)
+  region size 2048K, 0 young (0K), 0 survivors (0K)
+
+[error occurred during error reporting (printing heap information), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ffa176ae869]
+GC Heap History (0 events):
+No events
+
+Dll operation events (1 events):
+Event: 0.059 Loaded shared library C:\Users\11212\.jdks\openjdk-22.0.2\bin\java.dll
+
+Deoptimization events (0 events):
+No events
+
+Classes loaded (0 events):
+No events
+
+Classes unloaded (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+ZGC Phase Switch (0 events):
+No events
+
+VM Operations (0 events):
+No events
+
+Memory protections (0 events):
+No events
+
+Nmethod flushes (0 events):
+No events
+
+Events (0 events):
+No events
+
+
+Dynamic libraries:
+0x00007ff6605b0000 - 0x00007ff6605be000 	C:\Users\11212\.jdks\openjdk-22.0.2\bin\java.exe
+0x00007ffa60730000 - 0x00007ffa60947000 	C:\Windows\SYSTEM32\ntdll.dll
+0x00007ffa5ee50000 - 0x00007ffa5ef14000 	C:\Windows\System32\KERNEL32.DLL
+0x00007ffa5de80000 - 0x00007ffa5e22d000 	C:\Windows\System32\KERNELBASE.dll
+0x00007ffa5db30000 - 0x00007ffa5dc41000 	C:\Windows\System32\ucrtbase.dll
+0x00007ffa56870000 - 0x00007ffa5688b000 	C:\Users\11212\.jdks\openjdk-22.0.2\bin\VCRUNTIME140.dll
+0x00007ffa58040000 - 0x00007ffa58057000 	C:\Users\11212\.jdks\openjdk-22.0.2\bin\jli.dll
+0x00007ffa5ebf0000 - 0x00007ffa5ed9e000 	C:\Windows\System32\USER32.dll
+0x00007ffa5da80000 - 0x00007ffa5daa6000 	C:\Windows\System32\win32u.dll
+0x00007ffa51f30000 - 0x00007ffa521c3000 	C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.22621.3672_none_2713b9d173822955\COMCTL32.dll
+0x00007ffa5f2b0000 - 0x00007ffa5f357000 	C:\Windows\System32\msvcrt.dll
+0x00007ffa5f360000 - 0x00007ffa5f389000 	C:\Windows\System32\GDI32.dll
+0x00007ffa5dd60000 - 0x00007ffa5de79000 	C:\Windows\System32\gdi32full.dll
+0x00007ffa5dc50000 - 0x00007ffa5dcea000 	C:\Windows\System32\msvcp_win.dll
+0x00007ffa5f550000 - 0x00007ffa5f581000 	C:\Windows\System32\IMM32.DLL
+0x00007ffa59c70000 - 0x00007ffa59c7c000 	C:\Users\11212\.jdks\openjdk-22.0.2\bin\vcruntime140_1.dll
+0x00007ffa3d740000 - 0x00007ffa3d7ce000 	C:\Users\11212\.jdks\openjdk-22.0.2\bin\msvcp140.dll
+0x00007ffa16f70000 - 0x00007ffa17cb9000 	C:\Users\11212\.jdks\openjdk-22.0.2\bin\server\jvm.dll
+0x00007ffa5ef20000 - 0x00007ffa5efd2000 	C:\Windows\System32\ADVAPI32.dll
+0x00007ffa5eb40000 - 0x00007ffa5ebe9000 	C:\Windows\System32\sechost.dll
+0x00007ffa5da50000 - 0x00007ffa5da78000 	C:\Windows\System32\bcrypt.dll
+0x00007ffa5e670000 - 0x00007ffa5e784000 	C:\Windows\System32\RPCRT4.dll
+0x00007ffa5fd80000 - 0x00007ffa5fdf1000 	C:\Windows\System32\WS2_32.dll
+0x00007ffa5c8e0000 - 0x00007ffa5c92d000 	C:\Windows\SYSTEM32\POWRPROF.dll
+0x00007ffa51930000 - 0x00007ffa51964000 	C:\Windows\SYSTEM32\WINMM.dll
+0x00007ffa56b30000 - 0x00007ffa56b3a000 	C:\Windows\SYSTEM32\VERSION.dll
+0x00007ffa5c8c0000 - 0x00007ffa5c8d3000 	C:\Windows\SYSTEM32\UMPDC.dll
+0x00007ffa5cad0000 - 0x00007ffa5cae8000 	C:\Windows\SYSTEM32\kernel.appcore.dll
+0x00007ffa56860000 - 0x00007ffa5686a000 	C:\Users\11212\.jdks\openjdk-22.0.2\bin\jimage.dll
+0x00007ffa5af90000 - 0x00007ffa5b1c2000 	C:\Windows\SYSTEM32\DBGHELP.DLL
+0x00007ffa5e7b0000 - 0x00007ffa5eb3d000 	C:\Windows\System32\combase.dll
+0x00007ffa5f070000 - 0x00007ffa5f147000 	C:\Windows\System32\OLEAUT32.dll
+0x00007ffa57cc0000 - 0x00007ffa57cf2000 	C:\Windows\SYSTEM32\dbgcore.DLL
+0x00007ffa5dab0000 - 0x00007ffa5db2b000 	C:\Windows\System32\bcryptPrimitives.dll
+0x00007ffa566c0000 - 0x00007ffa566cf000 	C:\Users\11212\.jdks\openjdk-22.0.2\bin\instrument.dll
+0x00007ffa56840000 - 0x00007ffa5685e000 	C:\Users\11212\.jdks\openjdk-22.0.2\bin\java.dll
+0x00007ffa5fe80000 - 0x00007ffa606e8000 	C:\Windows\System32\SHELL32.dll
+0x00007ffa5f590000 - 0x00007ffa5f735000 	C:\Windows\System32\ole32.dll
+
+dbghelp: loaded successfully - version: 4.0.5 - missing functions: none
+symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;C:\Users\11212\.jdks\openjdk-22.0.2\bin;C:\Windows\SYSTEM32;C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.22621.3672_none_2713b9d173822955;C:\Users\11212\.jdks\openjdk-22.0.2\bin\server
+
+VM Arguments:
+jvm_args: -javaagent:D:\tool\IntelliJ IDEA Community Edition 2024.1.4\lib\idea_rt.jar=55269:D:\tool\IntelliJ IDEA Community Edition 2024.1.4\bin -Dfile.encoding=UTF-8 -Dsun.stdout.encoding=UTF-8 -Dsun.stderr.encoding=UTF-8 
+java_command: main.Main
+java_class_path (initial): E:\MXM\git-repository\CS61B\CS61B-Spring2024\proj2c\out\production\proj2c;E:\MXM\git-repository\CS61B\library-sp24\ucb.jar;E:\MXM\git-repository\CS61B\library-sp24\algs4.jar;E:\MXM\git-repository\CS61B\library-sp24\jh61b.jar;E:\MXM\git-repository\CS61B\library-sp24\proj2a.jar;E:\MXM\git-repository\CS61B\library-sp24\asm-9.1.jar;E:\MXM\git-repository\CS61B\library-sp24\gson-2.10.jar;E:\MXM\git-repository\CS61B\library-sp24\bcel-6.5.0.jar;E:\MXM\git-repository\CS61B\library-sp24\classmexer.jar;E:\MXM\git-repository\CS61B\library-sp24\jama-1.0.3.jar;E:\MXM\git-repository\CS61B\library-sp24\dom4j-2.1.3.jar;E:\MXM\git-repository\CS61B\library-sp24\jaxen-1.2.0.jar;E:\MXM\git-repository\CS61B\library-sp24\truth-1.1.3.jar;E:\MXM\git-repository\CS61B\library-sp24\asm-tree-9.4.jar;E:\MXM\git-repository\CS61B\library-sp24\asm-util-9.4.jar;E:\MXM\git-repository\CS61B\library-sp24\jsr305-3.0.2.jar;E:\MXM\git-repository\CS61B\library-sp24\junit-4.13.2.jar;E:\MXM\git-repository\CS61B\library-sp24\xchart-3.8.2.jar;E:\MXM\git-repository\CS61B\library-sp24\pdfbox-2.0.24.jar;E:\MXM\git-repository\CS61B\library-sp24\picocli-4.7.0.jar;E:\MXM\git-repository\CS61B\library-sp24\Saxon-HE-11.4.jar;E:\MXM\git-repository\CS61B\library-sp24\fontbox-2.0.24.jar;E:\MXM\git-repository\CS61B\library-sp24\asm-commons-9.4.jar;E:\MXM\git-repository\CS61B\library-sp24\graphics2d-0.33.jar;E:\MXM\git-repository\CS61B\library-sp24\httpcore5-5.1.3.jar;E:\MXM\git-repository\CS61B\library-sp24\slf4j-api-2.0.0.jar;E:\MXM\git-repository\CS61B\library-sp24\asm-analysis-9.4.jar;E:\MXM\git-repository\CS61B\library-sp24\log4j-api-2.19.0.jar;E:\MXM\git-repository\CS61B\library-sp24\opentest4j-1.2.0.jar;E:\MXM\git-repository\CS61B\library-sp24\spark-core-2.9.4.jar;E:\MXM\git-repository\CS61B\library-sp24\checkstyle-10.5.0.jar;E:\MXM\git-repository\CS61B\library-sp24\hamcrest-core-1.3.jar;E:\MXM\git-repository\CS61B\library-sp24\httpclient5-5.1.3.jar;E:\MXM\git-repository\CS61B\library-sp24\log4j-core-2.19.0.jar;E:\MXM\git-repository\CS61B\library-sp24\xmlresolver-4.4.3.jar;E:\MXM\git-repository\CS61B\library-sp24\commons-codec-1.15.jar;E:\MXM\git-repository\CS61B\library-sp24\httpcore5-h2-5.1.3.jar;E:\MXM\git-repository\CS61B\library-sp24\reflections-0.10.2.jar;E:\MXM\git-repository\CS61B\library-sp24\slf4j-simple-2.0.6.jar;E:\MXM\git-repository\CS61B\library-sp24\checker-qual-3.13.0.jar;E:\MXM\git-repository\CS61B\library-sp24\commons-logging-1.2.jar;E:\MXM\git-repository\CS61B\library-sp24\commons-text-1.10.0.jar;E:\MXM\git-repository\CS61B\library-sp24\failureaccess-1.0.1.jar;E:\MXM\git-repository\CS61B\library-sp24\javassist-3.29.2-GA.jar;E:\MXM\git-repository\CS61B\library-sp24\junit-jupiter-5.9.1.jar;E:\MXM\git-repository\CS61B\library-sp24\animated-gif-lib-1.4.jar;E:\MXM\git-repository\CS61B\library-sp24\commons-lang3-3.12.0.jar;E:\MXM\git-repository\CS61B\library-sp24\guava-30.1.1-android.jar;E:\MXM\git-repository\CS61B\library-sp24\jcip-annotations-1.0.jar;E:\MXM\git-repository\CS61B\library-sp24\antlr4-runtime-4.11.1.jar;E:\MXM\git-repository\CS61B\library-sp24\apiguardian-api-1.1.2.jar;E:\MXM\git-repository\CS61B\library-sp24\VectorGraphics2D-0.13.jar;E:\MXM\git-repository\CS61B\library-sp24\j2objc-annotations-1.3.jar;E:\MXM\git-repository\CS61B\library-sp24\xmlresolver-4.4.3-data.jar;E:\MXM\git-repository\CS61B\library-sp24\commons-beanutils-1.9.4.jar;E:\MXM\git-repository\CS61B\library-sp24\javaparser-core-3.24.10.jar;E:\MXM\git-repository\CS61B\library-sp24\javax.servlet-api-3.1.0.jar;E:\MXM\git-repository\CS61B\library-sp24\junit-jupiter-api-5.9.1.jar;E:\MXM\git-repository\CS61B\library-sp24\checker-compat-qual-2.5.5.jar;E:\MXM\git-repository\CS61B\library-sp24\commons-collections-3.2.2.jar;E:\MXM\git-repository\CS61B\library-sp24\jetty-io-9.4.48.v20220622.jar;E:\MXM\git-repository\CS61B\library-sp24\jetty-xml-9.4.48.v20220622.jar;E:\MXM\git-repository\CS61B\library-sp24\junit-jupiter-engine-5.9.1.jar;E:\MXM\git-repository\CS61B\library-sp24\junit-jupiter-params-5.9.1.jar;E:\MXM\git-repository\CS61B\library-sp24\junit-vintage-engine-5.9.1.jar;E:\MXM\git-repository\CS61B\library-sp24\spotbugs-annotations-4.7.3.jar;E:\MXM\git-repository\CS61B\library-sp24\jetty-http-9.4.48.v20220622.jar;E:\MXM\git-repository\CS61B\library-sp24\jetty-util-9.4.48.v20220622.jar;E:\MXM\git-repository\CS61B\library-sp24\junit-platform-engine-1.9.1.jar;E:\MXM\git-repository\CS61B\library-sp24\auto-value-annotations-1.8.1.jar;E:\MXM\git-repository\CS61B\library-sp24\jh61b-secureautograderrunner.jar;E:\MXM\git-repository\CS61B\library-sp24\junit-platform-commons-1.9.1.jar;E:\MXM\git-repository\CS61B\library-sp24\error_prone_annotations-2.7.1.jar;E:\MXM\git-repository\CS61B\library-sp24\jetty-client-9.4.48.v20220622.jar;E:\MXM\git-repository\CS61B\library-sp24\jetty-server-9.4.48.v20220622.jar;E:\MXM\git-repository\CS61B\library-sp24\jetty-webapp-9.4.48.v20220622.jar;E:\MXM\git-repository\CS61B\library-sp24\junit-platform-launcher-1.9.1.jar;E:\MXM\git-repository\CS61B\library-sp24\jetty-servlet-9.4.48.v20220622.jar;E:\MXM\git-repository\CS61B\library-sp24\websocket-api-9.4.48.v20220622.jar;E:\MXM\git-repository\CS61B\library-sp24\jetty-security-9.4.48.v20220622.jar;E:\MXM\git-repository\CS61B\library-sp24\jetty-util-ajax-9.4.48.v20220622.jar;E:\MXM\git-repository\CS61B\library-sp24\websocket-client-9.4.48.v20220622.jar;E:\MXM\git-repository\CS61B\library-sp24\websocket-common-9.4.48.v20220622.jar;E:\MXM\git-repository\CS61B\library-sp24\websocket-server-9.4.48.v20220622.jar;E:\MXM\git-repository\CS61B\library-sp24\websocket-servlet-9.4.48.v20220622.jar;E:\MXM\git-repository\CS61B\library-sp24\listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar
+Launcher Type: SUN_STANDARD
+
+[Global flags]
+     intx CICompilerCount                          = 4                                         {product} {ergonomic}
+     uint ConcGCThreads                            = 3                                         {product} {ergonomic}
+     uint G1ConcRefinementThreads                  = 10                                        {product} {ergonomic}
+   size_t G1HeapRegionSize                         = 2097152                                   {product} {ergonomic}
+   size_t InitialHeapSize                          = 264241152                                 {product} {ergonomic}
+   size_t MarkStackSize                            = 4194304                                   {product} {ergonomic}
+   size_t MaxHeapSize                              = 4215275520                                {product} {ergonomic}
+   size_t MinHeapDeltaBytes                        = 2097152                                   {product} {ergonomic}
+   size_t MinHeapSize                              = 8388608                                   {product} {ergonomic}
+    uintx NonNMethodCodeHeapSize                   = 5839372                                {pd product} {ergonomic}
+    uintx NonProfiledCodeHeapSize                  = 122909434                              {pd product} {ergonomic}
+    uintx ProfiledCodeHeapSize                     = 122909434                              {pd product} {ergonomic}
+    uintx ReservedCodeCacheSize                    = 251658240                              {pd product} {ergonomic}
+     bool SegmentedCodeCache                       = true                                      {product} {ergonomic}
+   size_t SoftMaxHeapSize                          = 4215275520                             {manageable} {ergonomic}
+     bool UseCompressedOops                        = true                           {product lp64_product} {ergonomic}
+     bool UseG1GC                                  = true                                      {product} {ergonomic}
+     bool UseLargePagesIndividualAllocation        = false                                  {pd product} {ergonomic}
+
+Logging:
+Log output configuration:
+ #0: stdout all=warning uptime,level,tags foldmultilines=false
+ #1: stderr all=off uptime,level,tags foldmultilines=false
+
+Environment Variables:
+PATH=D:\tool\VMware\bin\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;D:\tool\MATLAB\R2023a\runtime\win64;D:\tool\MATLAB\R2023a\bin;D:\tool\Git\cmd;D:\tool\anaconda3;D:\tool\anaconda3\Scripts;D:\tool\anaconda3\Library\mingw-w64-bin;D:\tool\anaconda3\Library\bin;C:\Users\11212\AppData\Local\Programs\Python\Launcher\;C:\Users\11212\AppData\Local\Microsoft\WindowsApps;;D:\tool\IntelliJ IDEA 2024.1.4\bin;;D:\tool\IntelliJ IDEA Community Edition 2024.1.4\bin;;D:\tool\PyCharm Community Edition 2024.1.4\bin;
+USERNAME=DELL
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 151 Stepping 5, GenuineIntel
+TMP=C:\Users\11212\AppData\Local\Temp
+TEMP=C:\Users\11212\AppData\Local\Temp
+
+
+
+
+Periodic native trim disabled
+
+---------------  S Y S T E M  ---------------
+
+OS:
+ Windows 11 , 64 bit Build 22621 (10.0.22621.3958)
+OS uptime: 10 days 17:34 hours
+
+CPU: total 12 (initial active 12) (6 cores per cpu, 2 threads per core) family 6 model 151 stepping 5 microcode 0x26, cx8, cmov, fxsr, ht, mmx, 3dnowpref, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, lzcnt, tsc, tscinvbit, avx, avx2, aes, erms, clmul, bmi1, bmi2, adx, sha, fma, vzeroupper, clflush, clflushopt, clwb, serialize, rdtscp, rdpid, fsrm, f16c, pku, cet_ibt, cet_ss
+Processor Information for all 12 processors :
+  Max Mhz: 3000, Current Mhz: 3000, Mhz Limit: 3000
+
+Memory: 4k page, system-wide physical 16072M (2313M free)
+TotalPageFile size 46324M (AvailPageFile size 87M)
+current process WorkingSet (physical memory assigned to process): 12M, peak: 12M
+current process commit charge ("private bytes"): 65M, peak: 316M
+
+vm_info: OpenJDK 64-Bit Server VM (22.0.2+9-70) for windows-amd64 JRE (22.0.2+9-70), built on 2024-06-04T16:52:23Z by "mach5one" with MS VC++ 17.6 (VS2022)
+
+END.
