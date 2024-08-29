@@ -4,8 +4,8 @@ import java.util.*;
 
 // Directed graph
 public class Graph {
-    private Map<Integer, List<Integer>> adjList;
-    private Map<Integer, List<Integer>> reverseAdjList;
+    private final Map<Integer, List<Integer>> adjList;
+    private final Map<Integer, List<Integer>> reverseAdjList;
 
     public Graph() {
         this.adjList = new HashMap<>();
