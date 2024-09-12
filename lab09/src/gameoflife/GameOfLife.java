@@ -289,10 +289,11 @@ public class GameOfLife {
      * @param tiles
      */
     public void saveBoard(TETile[][] tiles) {
-        TETile[][] flipState = flip(tiles);
-        this.currentState = transpose(flipState);
-        this.width = currentState[0].length;
-        this.height = currentState.length;
+        TETile[][] transposeState = transpose(tiles);
+        this.currentState = flip(transposeState);
+        this.width = tiles[0].length;
+        this.height = tiles.length;
+        saveBoard();
     }
 
     /**
@@ -301,19 +302,17 @@ public class GameOfLife {
      * 0 represents NOTHING, 1 represents a CELL.
      */
     public void saveBoard() {
-        saveBoard(currentState); // 将currentState处理成数组读取坐标系
-
         StringBuilder sb = new StringBuilder();
 
         // Save the dimensions of the board
         sb.append(width).append(" ").append(height).append('\n');
 
         // Save the current state of the board
-        for (int x = 0; x < height; x++) {
-            for (int y = 0; y < width; y++) {
-                if (currentState[x][y] == Tileset.NOTHING) {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                if (currentState[y][x] == Tileset.NOTHING) {
                     sb.append("0");
-                } else if (currentState[x][y] == Tileset.CELL) {
+                } else if (currentState[y][x] == Tileset.CELL) {
                     sb.append("1");
                 }
             }
@@ -341,17 +340,17 @@ public class GameOfLife {
         this.height = Integer.parseInt(dimensions[1]);
 
         // Step 4: Create a TETile[][] to load the board from the file into
-        TETile[][] board = new TETile[width][height];
+        TETile[][] board = new TETile[height][width];
 
         // Step 5: Load the state of the board
-        for (int y = 1; y < height; y++) {
-            String line = lines[y];
+        for (int y = 0; y < height; y++) {
+            String line = lines[y + 1];
             for (int x = 0; x < width; x++) {
                 char tile = line.charAt(x);
                 if (tile == '0') {
-                    board[x][y] = Tileset.NOTHING;
+                    board[y][x] = Tileset.NOTHING;
                 } else if (tile == '1') {
-                    board[x][y] = Tileset.CELL;
+                    board[y][x] = Tileset.CELL;
                 }
             }
         }

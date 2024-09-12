@@ -184,6 +184,32 @@ public class GameOfLifeTests {
         checkState(loadResult, result);
     }
 
+    @Test
+    public void loadTest() throws IOException {
+        checkIfPatternFilesAreModified();
+        GameOfLife student = new GameOfLife(1234567, true);
+
+        TETile[][] result = new TETile[][] {
+                {Tileset.NOTHING, Tileset.CELL, Tileset.NOTHING},
+                {Tileset.NOTHING, Tileset.CELL, Tileset.CELL},
+                {Tileset.CELL, Tileset.NOTHING, Tileset.NOTHING},
+                {Tileset.NOTHING, Tileset.CELL, Tileset.NOTHING}
+        };
+        TETile[][] loadResult = student.loadBoard(SAVE_TEST);
+        checkState(loadResult, result);
+    }
+
+    @Test
+    public void testSaveByMyself() throws IOException {
+        GameOfLife student = new GameOfLife(SAVE_TEST);
+        student.saveBoard();
+        String f1 = newlineReplacer(Files.readString(Paths.get(SAVE_FILE)));
+        String f2 = newlineReplacer(Files.readString(Paths.get(SAVE_TEST)));
+
+        assertWithMessage("Checks that saving works and is as expected with the given seed.")
+                .that(f1.equals(f2)).isTrue();
+    }
+
     /**
      * This checks if any of the pattern files have been modified. Modifications include
      * adding a newline, deleting/replacing characters, adding characters, etc.
