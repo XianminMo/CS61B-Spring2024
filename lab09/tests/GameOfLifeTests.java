@@ -184,6 +184,7 @@ public class GameOfLifeTests {
         checkState(loadResult, result);
     }
 
+    // 下面两个是根据对doc的理解，自己写的测试
     @Test
     public void loadTest() throws IOException {
         checkIfPatternFilesAreModified();
