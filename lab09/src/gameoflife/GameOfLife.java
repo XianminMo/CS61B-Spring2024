@@ -118,7 +118,7 @@ public class GameOfLife {
         int w = tiles[0].length;
         int h = tiles.length;
 
-        TETile[][] transposeState = new TETile[w][h];
+        TETile[][] transposeState = new TETile[w][h]; // 3行4列
         for (int x = 0; x < w; x++) {
             for (int y = 0; y < h; y++) {
                 transposeState[x][y] = tiles[y][x];
@@ -237,15 +237,51 @@ public class GameOfLife {
         // The board is filled with Tileset.NOTHING
         fillWithNothing(nextGen);
 
-        // TODO: Implement this method so that the described transitions occur.
-        // TODO: The current state is represented by TETiles[][] tiles and the next
-        // TODO: state/evolution should be returned in TETile[][] nextGen.
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                int liveNeighbors = countLiveNeighbors(tiles, x, y);
 
+                if (isAlive(tiles[x][y])) {
+                    if (liveNeighbors < 2 || liveNeighbors > 3) {
+                        // Rule 1 and 3: Live cell dies
+                        nextGen[x][y] = Tileset.NOTHING;
+                    } else {
+                        // Rule 2: Live cell continues to live
+                        nextGen[x][y] = tiles[x][y];
+                    }
+                } else {
+                    if (liveNeighbors == 3) {
+                        // Rule 4: Dead cell becomes a live cell
+                        nextGen[x][y] = Tileset.CELL;
+                    }
+                }
+            }
+        }
+        return nextGen;
+    }
 
+    // Helper method: count the number of the live neighbors of the tile at (x, y)
+    private int countLiveNeighbors(TETile[][] tiles, int x, int y) {
+        int count = 0;
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                if (i == 0 && j == 0) continue; // Skip the current cell
+                int nx = x + i;
+                int ny = y + j;
+                if (isInBounds(nx, ny) && isAlive(tiles[nx][ny])) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
 
+    private boolean isAlive(TETile tile) {
+        return tile == Tileset.CELL;
+    }
 
-        // TODO: Returns the next evolution in TETile[][] nextGen.
-        return null;
+    private boolean isInBounds(int x, int y) {
+        return x >= 0 && x < width && y >= 0 && y < height;
     }
 
     /**
@@ -253,11 +289,10 @@ public class GameOfLife {
      * @param tiles
      */
     public void saveBoard(TETile[][] tiles) {
-        TETile[][] transposeState = transpose(tiles);
-        this.currentState = flip(transposeState);
-        this.width = tiles[0].length;
-        this.height = tiles.length;
-        saveBoard();
+        TETile[][] flipState = flip(tiles);
+        this.currentState = transpose(flipState);
+        this.width = currentState[0].length;
+        this.height = currentState.length;
     }
 
     /**
@@ -266,20 +301,27 @@ public class GameOfLife {
      * 0 represents NOTHING, 1 represents a CELL.
      */
     public void saveBoard() {
-        // TODO: Save the dimensions of the board into the first line of the file.
-        // TODO: The width and height should be separated by a space, and end with "\n".
+        saveBoard(currentState); // 将currentState处理成数组读取坐标系
 
+        StringBuilder sb = new StringBuilder();
 
+        // Save the dimensions of the board
+        sb.append(width).append(" ").append(height).append('\n');
 
-        // TODO: Save the current state of the board into save.txt. You should
-        // TODO: use the provided FileUtils functions to help you. Make sure
-        // TODO: the orientation is correct! Each line in the board should
-        // TODO: end with a new line character.
+        // Save the current state of the board
+        for (int x = 0; x < height; x++) {
+            for (int y = 0; y < width; y++) {
+                if (currentState[x][y] == Tileset.NOTHING) {
+                    sb.append("0");
+                } else if (currentState[x][y] == Tileset.CELL) {
+                    sb.append("1");
+                }
+            }
+            sb.append("\n"); // End each line with a newline character
+        }
 
-
-
-
-
+        // Write to the file
+        FileUtils.writeFile(SAVE_FILE, sb.toString());
     }
 
     /**
@@ -287,25 +329,33 @@ public class GameOfLife {
      * 0 represents NOTHING, 1 represents a CELL.
      */
     public TETile[][] loadBoard(String filename) {
-        // TODO: Read in the file.
+        // Step 1: Read in the file
+        String fileContents = FileUtils.readFile(filename);
 
-        // TODO: Split the file based on the new line character.
+        // Step 2: Split the file based on the new line character
+        String[] lines = fileContents.split("\n");
 
-        // TODO: Grab and set the dimensions from the first line.
+        // Step 3: Grab and set the dimensions from the first line
+        String[] dimensions = lines[0].split(" ");
+        this.width = Integer.parseInt(dimensions[0]);
+        this.height = Integer.parseInt(dimensions[1]);
 
-        // TODO: Create a TETile[][] to load the board from the file into
-        // TODO: and any additional variables that you think might help.
+        // Step 4: Create a TETile[][] to load the board from the file into
+        TETile[][] board = new TETile[width][height];
 
-
-        // TODO: Load the state of the board from the given filename. You can
-        // TODO: use the provided builder variable to help you and FileUtils
-        // TODO: functions. Make sure the orientation is correct!
-
-
-
-
-        // TODO: Return the board you loaded. Replace/delete this line.
-        return null;
+        // Step 5: Load the state of the board
+        for (int y = 1; y < height; y++) {
+            String line = lines[y];
+            for (int x = 0; x < width; x++) {
+                char tile = line.charAt(x);
+                if (tile == '0') {
+                    board[x][y] = Tileset.NOTHING;
+                } else if (tile == '1') {
+                    board[x][y] = Tileset.CELL;
+                }
+            }
+        }
+        return board;
     }
 
     /**

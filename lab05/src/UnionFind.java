@@ -38,7 +38,7 @@ public class UnionFind {
         if (parent(v) < 0) {
             return v;
         }else {
-            ufSet[v] = find(parent(v));
+            ufSet[v] = find(parent(v)); // path compression
         }
         return parent(v);
     }
