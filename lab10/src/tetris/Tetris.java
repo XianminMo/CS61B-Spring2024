@@ -90,7 +90,7 @@ public class Tetris {
             return;
         }
 
-        while (StdDraw.hasNextKeyTyped()) {
+        if (StdDraw.hasNextKeyTyped()) {
             char key = StdDraw.nextKeyTyped();
             moveTetromino(key);
         }
@@ -98,6 +98,7 @@ public class Tetris {
        Tetromino.draw(t, board, t.pos.x, t.pos.y);
     }
 
+    // Move or rotate the tetromino
     private void moveTetromino(char key) {
         switch (key) {
             case 'w': movement.rotateRight(); break;
@@ -114,14 +115,23 @@ public class Tetris {
      * @param linesCleared
      */
     private void incrementScore(int linesCleared) {
-        if (linesCleared == 1) {
-            score += 100;
-        } else if (linesCleared == 2) {
-            score += 300;
-        } else if (linesCleared == 3) {
-            score += 500;
-        } else if (linesCleared == 4) {
-            score += 800;
+        if (linesCleared < 1 || linesCleared > 4) {
+            return;
+        }
+
+        switch (linesCleared) {
+            case 1:
+                score += 100;
+                break;
+            case 2:
+                score += 300;
+                break;
+            case 3:
+                score += 500;
+                break;
+            case 4:
+                score += 800;
+                break;
         }
     }
 
