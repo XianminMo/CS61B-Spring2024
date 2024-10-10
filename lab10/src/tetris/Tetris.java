@@ -90,11 +90,22 @@ public class Tetris {
             return;
         }
 
-        // TODO: Implement interactivity, so the user is able to input the keystrokes to move
-        //  the tile and rotate the tile. You'll want to use some provided helper methods here.
+        while (StdDraw.hasNextKeyTyped()) {
+            char key = StdDraw.nextKeyTyped();
+            moveTetromino(key);
+        }
 
+       Tetromino.draw(t, board, t.pos.x, t.pos.y);
+    }
 
-        Tetromino.draw(t, board, t.pos.x, t.pos.y);
+    private void moveTetromino(char key) {
+        switch (key) {
+            case 'w': movement.rotateRight(); break;
+            case 'a': movement.tryMove(-1, 0); break;
+            case 's': movement.dropDown(); break;
+            case 'd': movement.tryMove(1, 0); break;
+            case 'q': movement.rotateLeft(); break;
+        }
     }
 
     /**
@@ -103,8 +114,15 @@ public class Tetris {
      * @param linesCleared
      */
     private void incrementScore(int linesCleared) {
-        // TODO: Increment the score based on the number of lines cleared.
-
+        if (linesCleared == 1) {
+            score += 100;
+        } else if (linesCleared == 2) {
+            score += 300;
+        } else if (linesCleared == 3) {
+            score += 500;
+        } else if (linesCleared == 4) {
+            score += 800;
+        }
     }
 
     /**
