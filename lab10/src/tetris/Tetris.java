@@ -145,14 +145,14 @@ public class Tetris {
         // Keeps track of the current number lines cleared
         int linesCleared = 0;
 
-        printBoard(tiles);
+//        printBoard(tiles);
 
         for (int row = 0; row < tiles[0].length; row++) {
             boolean isComplete = true;
 
             for (int col = 0; col < tiles.length; col++) {
                 if (tiles[col][row].equals(Tileset.NOTHING)) {
-                    System.out.println("Tile at (" + row + ", " + col + "): " + tiles[col][row].toString());
+//                    System.out.println("Tile at (" + row + ", " + col + "): " + tiles[col][row].toString());
                     isComplete = false;
                     break;
                 }
@@ -163,11 +163,11 @@ public class Tetris {
                 linesCleared++;
                 row--;
             }
-            System.out.println("Row " + row + " is complete: " + isComplete);
+//            System.out.println("Row " + row + " is complete: " + isComplete);
 
         }
 
-        System.out.println("Lines cleared: " + linesCleared);  // 调试信息
+//        System.out.println("Lines cleared: " + linesCleared);  // 调试信息
 
 
         incrementScore(linesCleared);
@@ -221,7 +221,17 @@ public class Tetris {
      * Renders the score using the StdDraw library.
      */
     private void renderScore() {
-        // TODO: Use the StdDraw library to draw out the score.
+        // 设置文字颜色为白色
+        StdDraw.setPenColor(255, 255, 255);
+
+
+        StdDraw.setFont();
+
+
+        StdDraw.text(7, 19, "Score: " + score);
+
+
+        StdDraw.show();
 
     }
 
