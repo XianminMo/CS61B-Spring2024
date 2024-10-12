@@ -1,6 +1,7 @@
 package tetris;
 
 import edu.princeton.cs.algs4.StdDraw;
+import net.sf.saxon.trans.SymbolicName;
 import tileengine.TETile;
 import tileengine.TERenderer;
 import tileengine.Tileset;
@@ -144,11 +145,54 @@ public class Tetris {
         // Keeps track of the current number lines cleared
         int linesCleared = 0;
 
-        // TODO: Check how many lines have been completed and clear it the rows if completed.
+        printBoard(tiles);
 
-        // TODO: Increment the score based on the number of lines cleared.
+        for (int row = 0; row < tiles[0].length; row++) {
+            boolean isComplete = true;
 
+            for (int col = 0; col < tiles.length; col++) {
+                if (tiles[col][row].equals(Tileset.NOTHING)) {
+                    System.out.println("Tile at (" + row + ", " + col + "): " + tiles[col][row].toString());
+                    isComplete = false;
+                    break;
+                }
+            }
+
+            if (isComplete) {
+                clearRow(tiles, row);
+                linesCleared++;
+                row--;
+            }
+            System.out.println("Row " + row + " is complete: " + isComplete);
+
+        }
+
+        System.out.println("Lines cleared: " + linesCleared);  // 调试信息
+
+
+        incrementScore(linesCleared);
         fillAux();
+    }
+
+    private void printBoard(TETile[][] board) {
+        for (int row = 0; row < board[0].length; row++) {
+            for (int col = 0; col < board.length; col++) {
+                System.out.print(board[col][row] + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    private void clearRow(TETile[][] tiles, int row) {
+        for (int r = row; r < tiles[0].length - 1; r++) {
+            for (int c = 0; c < tiles.length; c++) {
+                tiles[c][r] = tiles[c][r + 1];
+            }
+        }
+
+        for (int c = 0; c < tiles.length; c++) {
+            tiles[c][tiles[0].length - 1] = Tileset.NOTHING;
+        }
     }
 
     /**
@@ -157,11 +201,20 @@ public class Tetris {
      */
     public void runGame() {
         resetActionTimer();
+        spawnPiece();  // 游戏一开始就生成一个方块
 
-        // TODO: Set up your game loop. The game should keep running until the game is over.
-        // Use helper methods inside your game loop, according to the spec description.
+        // 游戏主循环，直到游戏结束
+        while (!isGameOver()) {
+            updateBoard();  // 检查用户输入并更新当前方块的位置
 
+            // 如果当前方块无法再下落（游戏逻辑中会自动将其设置为null）
+            if (getCurrentTetromino() == null) {
+                clearLines(getBoard());  // 清除已满的行并更新分数
+                spawnPiece();  // 生成新的方块
+            }
 
+            renderBoard();  // 渲染最新的棋盘状态，确保界面更新
+        }
     }
 
     /**
